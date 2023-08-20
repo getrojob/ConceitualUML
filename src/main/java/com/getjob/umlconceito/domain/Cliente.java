@@ -3,12 +3,10 @@ package com.getjob.umlconceito.domain;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.getjob.umlconceito.domain.enums.TipoCliente;
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Cliente implements Serializable {
@@ -27,8 +25,12 @@ public class Cliente implements Serializable {
     private List<Endereco> enderecos = new ArrayList<>();
 
     @ElementCollection
-    @CollectionTable(name ="TELEFONE")
+    @CollectionTable(name = "TELEFONE")
     private Set<String> telefones = new HashSet<>();
+
+    @OneToMany(mappedBy = "cliente")
+    @Getter
+    private List<Pedido> pedidos = new ArrayList<>();
 
     public Cliente() {
     }
@@ -95,5 +97,22 @@ public class Cliente implements Serializable {
 
     public void setTelefones(Set<String> telefones) {
         this.telefones = telefones;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cliente cliente = (Cliente) o;
+        return Objects.equals(id, cliente.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
