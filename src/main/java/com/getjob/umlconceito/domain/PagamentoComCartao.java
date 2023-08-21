@@ -1,5 +1,6 @@
 package com.getjob.umlconceito.domain;
 
+import com.getjob.umlconceito.domain.enums.EstadoPagamento;
 import jakarta.persistence.Entity;
 
 @Entity
@@ -12,7 +13,7 @@ public class PagamentoComCartao extends Pagamento {
     }
 
     public PagamentoComCartao(Integer id, Integer estado, Pedido pedido, Integer numeroDeParcelas) {
-        super(id, estado, pedido);
+        super(id, EstadoPagamento.toEnum(estado), pedido);
         this.numeroDeParcelas = numeroDeParcelas;
     }
 
