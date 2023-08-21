@@ -1,5 +1,7 @@
 package com.getjob.umlconceito.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.getjob.umlconceito.domain.enums.EstadoPagamento;
 import jakarta.persistence.*;
 
@@ -13,6 +15,8 @@ public abstract class Pagamento implements Serializable {
     @Id
     private Integer id;
     private Integer estado;
+
+    @JsonIgnore
     @JoinColumn(name = "pedido_id")
     @OneToOne
     @MapsId
